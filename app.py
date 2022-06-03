@@ -66,7 +66,6 @@ if st.sidebar.button('Click to see the result'):
     # print is visible in the server output, not in the page
     print('button clicked it will show the rating!')
     if api['rating']==2 or api['rating']==3:
-        col1.balloons()
         expander = col1.expander("Optional informations")
         with expander:
             col1.metric(label="The wind speed in m/s", value=api['wind_speed'])
@@ -76,7 +75,6 @@ if st.sidebar.button('Click to see the result'):
         st.success('It is the ideal time to surf!')
         st.write(f'''Date: {today} - Time: {now.hour}:{now.minute} ''')
     else:
-        col1.snow()
         expander = col1.expander("Optional informations")
         with expander:
             col1.metric(label="The wind speed in m/s", value=api['wind_speed'])
