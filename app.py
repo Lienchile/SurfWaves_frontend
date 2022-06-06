@@ -3,6 +3,8 @@ import streamlit as st
 from datetime import date
 from datetime import datetime
 import pandas as pd
+import requests
+
 
 ### --------------SURF WAVES STREAMLIT CODE -------------------------###
 
@@ -17,10 +19,15 @@ st.title("""SurfWaves Project :surfer:""")
 st.sidebar.header(':round_pushpin: Choose your specific feature:')
 
 #Add a select box to choose the location
+
 api_input = st.sidebar.selectbox(
     ' Where would you like to surf?',
     ('DePanne', 'Oostend', 'Knokke')
 )
+print(type(api_input))
+print(api_input)
+
+
 if api_input == 'DePanne':
     st.sidebar.write(f'You choose {api_input}')
     st.sidebar.write('''It is situated close to the border
@@ -54,18 +61,24 @@ timestamp =pd.to_datetime(now)
 # Print the current date only
 today = date.today()
 
-#Dummy answer
+# --------------------- API------------------#
 
-api = {"rating": 2,
-       'wind_speed': 10.5,
-       'wind_direction':58,
-        'tide': 'low',
-        'wave_height': 150}
+#the API I will receive from the API
+url = f'https://surfwaves-gwnkrccqsa-ew.a.run.app/predict?location={api_input}'
+response = requests.get(url).json()
+
+
+api = {"rating": response['rating'],
+       'wind_speed': response['wind_speed'],
+       'wind_direction':response['wind_direction'],
+        'tide': response['tide'],
+        'wave_height': response['wave_height']}
+
 
 if st.sidebar.button('Click to see the result'):
     # print is visible in the server output, not in the page
     print('button clicked it will show the rating!')
-    if api['rating']==2 or api['rating']==3:
+    if api['rating']>2:
         expander = col1.expander("Optional informations")
         with expander:
             col1.metric(label="The wind speed in m/s", value=api['wind_speed'])
@@ -86,4 +99,4 @@ if st.sidebar.button('Click to see the result'):
         st.write(f'''Date: {today} - Time: {now.hour}:{now.minute} ''')
 
 else:
-    st.write('👈 Choose your location and click on the button on the sidebar to see if it is a good day to go surfing')
+    st.write('👈 Please choose your location and click on the button on the sidebar to see if it is a good day to go surfing')
