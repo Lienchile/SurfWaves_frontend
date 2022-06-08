@@ -1,19 +1,19 @@
 # packaging
 pip>=9
 setuptools>=26
-twine
+twine==4.0.0
 wheel>=0.29
 
 # data science
 numpy==1.18.5
-pandas
-scikit-learn
+pandas==1.3.5
+scikit-learn==0.22
 
 # tests/linter
-black
-coverage
-flake8
-pytest
+black==21.12b0
+coverage==6.2
+flake8==4.0.1
+pytest==6.2.5
 yapf
 
 # API
@@ -29,8 +29,8 @@ six>=1.14
 joblib
 memoized-property
 termcolor
-xgboost
+xgboost==1.5.1
 
 #webapp
-streamlit
-streamlit_kpi_metric
+streamlit==1.9.1
+streamlit_kpi_metric==0.1.1

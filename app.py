@@ -78,48 +78,55 @@ timestamp =pd.to_datetime(now)
 # Print the current date only
 today = date.today()
 tomorrow = today + timedelta(1)
+
+
+
 # --------------------- API loading------------------#
 
 #the API I will receive from the API
 
 def get_prediction():
-    url = f'https://surfwaves-gwnkrccqsa-ew.a.run.app/predict?location={api_input}'
-    response = requests.get(url).json()
-    api = {"rating": response['rating'],
-       'wind_speed': response['wind_speed'],
-       'wind_direction':response['wind_direction'],
-        'tide': response['tide'],
-        'wave_height': response['wave_height'],
-        'forecast_high': response['forecast_high'],
-        'forecast_low': response['forecast_low'],
-        'img_1':response['img_1'],
-        'img_2':response['img_2']}
+    with st.spinner('Loading data...'):
+
+        url = f'https://surfwaves-gwnkrccqsa-ew.a.run.app/predict?location={api_input}'
+        response = requests.get(url).json()
+        api = {"rating": response['rating'],
+        'wind_speed': response['wind_speed'],
+        'wind_direction':response['wind_direction'],
+            'tide': response['tide'],
+            'wave_height': response['wave_height'],
+            'forecast_high': response['forecast_high'],
+            'forecast_low': response['forecast_low'],
+            'img_1':response['img_1'],
+            'img_2':response['img_2']}
+
+        # -----------------------Add a bar progess -----------------------------------#
     return api
 
 
+# latest_iteration = st.empty()
+#     bar = st.progress(0)
+#     for i in range(100):
+#             # Update the progress bar with each iteration.
+#             if i<26:
+#                 latest_iteration.text('Uploading progression: getting wind direction')
+#             elif 25 < i < 51:
+#                 latest_iteration.text('Uploading progression: getting tide level')
+#             elif 50 < i < 76:
+#                 latest_iteration.text('Uploading progression: getting wind speed')
+#             elif 75 < i < 98:
+#                 latest_iteration.text('Uploading progression: getting forecasting')
+#             else:
+#                 latest_iteration.text('Uploading done')
+#             bar.progress(i + 1)
+#             time.sleep(0.1)
 
 if st.sidebar.button('Click to see the result'):
 
     api = get_prediction()
 
 
- # -----------------------Add a bar progess -----------------------------------#
-    latest_iteration = st.empty()
-    bar = st.progress(0)
-    for i in range(100):
-        # Update the progress bar with each iteration.
-        if i<26:
-            latest_iteration.text('Uploading progression: getting wind direction')
-        elif 25 < i < 51:
-            latest_iteration.text('Uploading progression: getting tide level')
-        elif 50 < i < 76:
-            latest_iteration.text('Uploading progression: getting wind speed')
-        elif 75 < i < 98:
-            latest_iteration.text('Uploading progression: getting forecasting')
-        else:
-            latest_iteration.text('Uploading done')
-        bar.progress(i + 1)
-        time.sleep(0.1)
+
 
 #------------------------- Real time information --------------------------------#
     # col1.metric(label="The wind speed in m/s", value=api['wind_speed'])
@@ -276,7 +283,7 @@ def background_image_style(path):
     '''
     return style
 
-image_path = 'background.jpg'
+image_path = 'pexels-negative-space-127582.jpg'
 image_link = 'https://docs.python.org/3/'
 
 
