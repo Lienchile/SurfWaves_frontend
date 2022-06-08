@@ -33,4 +33,4 @@ xgboost==1.5.1
 
 #webapp
 streamlit==0.86.0
-streamlit_kpi_metric==0.1.1
+# streamlit_kpi_metric==0.1.1
